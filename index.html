@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Scroll Rotation</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -12,8 +11,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: black;
             height: 300vh; /* Makes scrolling possible */
+            background: black;
+            color: white;
         }
         canvas {
             position: fixed;
@@ -26,7 +26,6 @@
             width: 30%;
             top: 50px;
             font-size: 1.5rem;
-            color: white;
         }
     </style>
 </head>
@@ -38,12 +37,12 @@
     </div>
 
     <script type="module">
-        import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.min.js';
-        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/GLTFLoader.js';
+        import * as THREE from 'https://unpkg.com/three@0.138.0/build/three.module.js';
+        import { GLTFLoader } from 'https://unpkg.com/three@0.138.0/examples/jsm/loaders/GLTFLoader.js';
 
         let scene, camera, renderer, model;
 
-        // Initialize Scene
+        // Initialize Three.js Scene
         function init() {
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -56,9 +55,11 @@
             const light = new THREE.AmbientLight(0xffffff, 1);
             scene.add(light);
 
+            // Load 3D Model
             const loader = new GLTFLoader();
-            loader.load('lion-dance.glb', (gltf) => {
+            loader.load('https://modelviewer.dev/shared-assets/models/Astronaut.glb', (gltf) => {
                 model = gltf.scene;
+                model.scale.set(1.5, 1.5, 1.5);
                 scene.add(model);
                 animate();
             });
